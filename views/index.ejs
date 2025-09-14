@@ -1,0 +1,33 @@
+<%- include("partials/header") %>
+
+<h1>📝 My Blog</h1>
+
+<form action="/compose" method="POST">
+  <input type="text" name="postTitle" placeholder="Enter title" required />
+  <textarea name="postBody" placeholder="Write your post..." required></textarea>
+  <button type="submit">Publish</button>
+</form>
+
+<hr />
+
+<% if (posts.length === 0) { %>
+  <p>No posts yet. Start writing!</p>
+<% } else { %>
+  <% posts.forEach(post => { %>
+    <div class="post" id="post-<%= post.id %>">
+      <h2><%= post.title %></h2>
+      <p><%= post.content %></p>
+      <form action="/edit/<%= post.id %>" method="get">
+        <button>Edit</button>
+      </form>
+      <form action="/delete/<%= post.id %>" method="post">
+        <button>Delete</button>
+      </form>
+    </div>
+    <hr />
+  <% }) %>
+<% } %>
+
+  
+
+<%- include("partials/footer") %>
