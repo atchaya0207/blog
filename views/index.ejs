@@ -1,0 +1,35 @@
+<%- include("partials/header") %>
+
+<h1> My Blog</h1>
+<form action="/posts" method="POST">
+  <input type="text" name="title" placeholder="Enter title" required />
+  <textarea name="content" placeholder="Write your post..." required></textarea>
+  <button type="submit">Publish</button>
+</form>
+
+<hr />
+
+<% if (posts.length === 0) { %>
+  <p>No posts yet. Start writing!</p>
+<% } else { %>
+  <% posts.forEach(post => { %>
+  <div class="post">
+    <h2><%= post.title %></h2>
+    <p><%= post.content %></p>
+    <small style="color:#888;">By <%= post.authorName || 'Unknown' %></small>
+    <% if (post.author && post.author.toString() === currentUserId) { %>
+      <form action="/edit/<%= post._id %>" method="get" style="display:inline;">
+        <button>Edit</button>
+      </form>
+      <form action="/delete/<%= post._id %>" method="post" style="display:inline;">
+        <button style="background-color:#e74c3c;">Delete</button>
+      </form>
+    <% } %>
+  </div>
+  <hr />
+<% }) %>
+<% } %>
+
+  
+
+<%- include("partials/footer") %>
